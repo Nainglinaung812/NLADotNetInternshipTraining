@@ -61,14 +61,15 @@ public class EFCoreDatabaseSample
             System.Console.WriteLine("Data not found");
             return;
         }
-        student.StudentName = "Linn Aung";
+        student.StudentName = "Naing Linn Aung";
         int result = _db.SaveChanges();
         System.Console.WriteLine(result > 0 ? "Updating Successful" : "Updating Failed");
 
     }
+
     public void Delete()
     {
-        TblStudent student = _db.TblStudents.FirstOrDefault(x => x.StudentId == 19);
+        TblStudent student = _db.TblStudents.FirstOrDefault(x => x.StudentId == 33);
         if (student is null)
         {
             System.Console.WriteLine("Data not found");

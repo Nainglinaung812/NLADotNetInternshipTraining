@@ -66,7 +66,7 @@ public class EFCoreModelSample
     }
     public void Delete()
     {
-        Student student = _db.Students.FirstOrDefault(x => x.StudentId == 18);
+        Student student = _db.Students.FirstOrDefault(x => x.StudentId == 37);
         if (student is null)
         {
             System.Console.WriteLine("Data not found");
