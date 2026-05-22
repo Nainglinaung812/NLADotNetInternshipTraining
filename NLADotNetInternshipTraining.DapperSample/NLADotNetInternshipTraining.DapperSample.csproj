@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../NLADotNetInternshipTraining.AdoDotNetSample/NLADotNetInternshipTraining.AdoDotNetSample.csproj" />
+  </ItemGroup>
+
 </Project>
