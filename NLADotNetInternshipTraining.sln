@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.EFCoreModelFirstSample", "NLADotNetInternshipTraining.EFCoreModelFirstSample\NLADotNetInternshipTraining.EFCoreModelFirstSample.csproj", "{B0137998-1F5A-4BE8-90A3-2735C562EFBB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.WebApi", "NLADotNetInternshipTraining.WebApi\NLADotNetInternshipTraining.WebApi.csproj", "{1B9D0C11-DF61-46BB-AC05-85523A75C1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{B0137998-1F5A-4BE8-90A3-2735C562EFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0137998-1F5A-4BE8-90A3-2735C562EFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0137998-1F5A-4BE8-90A3-2735C562EFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B9D0C11-DF61-46BB-AC05-85523A75C1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B9D0C11-DF61-46BB-AC05-85523A75C1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B9D0C11-DF61-46BB-AC05-85523A75C1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B9D0C11-DF61-46BB-AC05-85523A75C1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
