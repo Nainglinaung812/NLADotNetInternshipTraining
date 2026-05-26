@@ -1,0 +1,1130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bus Ticket Booking Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col"
+  >
+    <header
+      class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center border-b border-slate-800"
+    >
+      <div class="flex items-center gap-3 text-lg font-semibold tracking-tight">
+        <i class="fa-solid fa-server text-slate-400"></i>
+        <span
+          >Bus Ticket Booking Management System<span
+            class="text-slate-400 font-normal text-sm"
+          >
+            | System Dashboard</span
+          ></span
+        >
+      </div>
+    </header>
+
+    <div class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+      <div class="max-w-[1600px] mx-auto px-4 lg:px-6">
+        <nav class="flex flex-wrap gap-2 py-3" id="topNav">
+          <button
+            data-target="#routes-sec"
+            class="tab-btn active flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 bg-slate-900 text-white shadow-sm"
+          >
+            <i class="fa-solid fa-route text-xs"></i> Route (လမ်းကြောင်းများ)
+          </button>
+          <button
+            data-target="#buses-sec"
+            class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 text-slate-600 hover:bg-slate-100"
+          >
+            <i class="fa-solid fa-bus text-xs"></i> Buses (ကားများ)
+          </button>
+          <button
+            data-target="#schedules-sec"
+            class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 text-slate-600 hover:bg-slate-100"
+          >
+            <i class="fa-solid fa-calendar-days text-xs"></i> Schedules
+            (ခရီးစဉ်များ)
+          </button>
+          <button
+            data-target="#bookings-sec"
+            class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 text-slate-600 hover:bg-slate-100"
+          >
+            <i class="fa-solid fa-ticket text-xs"></i> Bookings
+            (လက်မှတ်ဝယ်ယူခြင်း)
+          </button>
+          <button
+            data-target="#seats-sec"
+            class="tab-btn flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 text-slate-600 hover:bg-slate-100"
+          >
+            <i class="fa-solid fa-border-all text-xs"></i> Live Seats Layout
+            (ထိုင်ခုံများ)
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <div class="flex-1 max-w-[1600px] w-full mx-auto p-4 lg:p-6">
+      <main class="w-full min-w-0">
+        <div id="routes-sec" class="tab-content block space-y-6">
+          <div
+            class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm"
+          >
+            <h2
+              class="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wider"
+            >
+              Route Management (လမ်းကြောင်း စီမံခန့်ခွဲမှု)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Departure (ဘယ်ကထွက်)</label
+                >
+                <input
+                  type="text"
+                  id="routeFrom"
+                  placeholder="e.g., Yangon"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Destination (ဘယ်ရောက်မယ်)</label
+                >
+                <input
+                  type="text"
+                  id="routeTo"
+                  placeholder="e.g., Mandalay"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Distance (KM)</label
+                >
+                <input
+                  type="number"
+                  id="routeKM"
+                  placeholder="e.g., 450"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+            </div>
+            <div
+              class="flex justify-end gap-2 mt-5 pt-4 border-t border-slate-100"
+            >
+              <button
+                onclick="clearRouteForm()"
+                class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+              >
+                Clear
+              </button>
+              <button
+                id="btnSaveRoute"
+                class="px-4 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition"
+              >
+                Save Route
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm"
+          >
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+                >
+                  <th class="py-3 px-4 w-28">Actions</th>
+                  <th class="py-3 px-4 w-16">Idx</th>
+                  <th class="py-3 px-4">Departure (ဘယ်ကထွက်)</th>
+                  <th class="py-3 px-4">Destination (ဘယ်ရောက်မယ်)</th>
+                  <th class="py-3 px-4">Distance Value</th>
+                </tr>
+              </thead>
+              <tbody
+                id="tblRoutes"
+                class="text-sm divide-y divide-slate-100"
+              ></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="buses-sec" class="tab-content hidden space-y-6">
+          <div
+            class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm"
+          >
+            <h2
+              class="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wider"
+            >
+              Bus Management (ကားစာရင်း စီမံခန့်ခွဲမှု)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >License Plate / Bus ID (ယာဉ်အမှတ်)</label
+                >
+                <input
+                  type="text"
+                  id="busNum"
+                  placeholder="e.g., YGN-1234"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Coach Model / Class (ယာဉ်အမျိုးအစား / အတန်းအစား)</label
+                >
+                <input
+                  type="text"
+                  id="busType"
+                  placeholder="e.g., Scania VIP Luxury"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Total Seat Capacity (စုစုပေါင်း ထိုင်ခုံအရေအတွက်)</label
+                >
+                <input
+                  type="number"
+                  id="busTotalSeats"
+                  placeholder="e.g., 40"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+            </div>
+            <div
+              class="flex justify-end gap-2 mt-5 pt-4 border-t border-slate-100"
+            >
+              <button
+                onclick="clearBusForm()"
+                class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+              >
+                Clear
+              </button>
+              <button
+                id="btnSaveBus"
+                class="px-4 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition"
+              >
+                Register Bus
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm"
+          >
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+                >
+                  <th class="py-3 px-4 w-28">Actions</th>
+                  <th class="py-3 px-4 w-16">Idx</th>
+                  <th class="py-3 px-4">License Registry (ယာဉ်အမှတ်)</th>
+                  <th class="py-3 px-4">Coach Profile (ယာဉ်အမျိုးအစား)</th>
+                  <th class="py-3 px-4">Capacity Bound (ထိုင်ခုံဆံ့ဝင်မှု)</th>
+                </tr>
+              </thead>
+              <tbody
+                id="tblBuses"
+                class="text-sm divide-y divide-slate-100"
+              ></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="schedules-sec" class="tab-content hidden space-y-6">
+          <div
+            class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm"
+          >
+            <h2
+              class="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wider"
+            >
+              Operations Time Planner (ခရီးစဉ်အချိန်ဇယားဆွဲရန်)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Route Track Allocation (ခရီးစဉ်လမ်းကြောင်း
+                  ရွေးချယ်ရန်)</label
+                >
+                <select
+                  id="schRouteId"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                >
+                  <option value="">-- Choose Route --</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Fleet Assignment (တာဝန်ပေးမည့် ယာဉ်ရွေးချယ်ရန်)</label
+                >
+                <select
+                  id="schBusId"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                >
+                  <option value="">-- Choose Vehicle --</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Base Fare Price / MMK (လက်မှတ်ဈေးနှုန်း)</label
+                >
+                <input
+                  type="number"
+                  id="schPrice"
+                  placeholder="e.g., 30000"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Departure Target Time (ထွက်ခွာမည့် အချိန်နှင့် ရက်စွဲ)</label
+                >
+                <input
+                  type="datetime-local"
+                  id="schTime"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+            </div>
+            <div
+              class="flex justify-end gap-2 mt-5 pt-4 border-t border-slate-100"
+            >
+              <button
+                id="btnCancelSchedule"
+                onclick="clearScheduleForm()"
+                class="hidden px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition"
+              >
+                Cancel Edit (ပြင်ဆင်မှုဖျက်သိမ်းရန်)
+              </button>
+              <button
+                id="btnSaveSchedule"
+                class="px-4 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition"
+              >
+                Commit Schedule
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm"
+          >
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-slate-50 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+                >
+                  <th class="py-3 px-4 w-32">Actions</th>
+                  <th class="py-3 px-4 w-16">Idx</th>
+                  <th class="py-3 px-4">Route Leg (ခရီးစဉ်လမ်းကြောင်း)</th>
+                  <th class="py-3 px-4">Assigned Fleet No. (ယာဉ်အမှတ်)</th>
+                  <th class="py-3 px-4">Fare Configuration (ဈေးနှုန်း)</th>
+                  <th class="py-3 px-4">Departure Time (ထွက်ခွာမည့်အချိန်)</th>
+                </tr>
+              </thead>
+              <tbody
+                id="tblSchedules"
+                class="text-sm divide-y divide-slate-100"
+              ></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div
+          id="bookings-sec"
+          class="tab-content hidden grid grid-cols-1 xl:grid-cols-12 gap-6 items-start"
+        >
+          <div
+            class="xl:col-span-5 bg-white rounded-xl border border-slate-200 p-6 shadow-sm"
+          >
+            <h2
+              class="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wider"
+            >
+              Execute Booking Order (လက်မှတ်ဝယ်ယူ/ရောင်းချခြင်း)
+            </h2>
+            <div class="space-y-3.5">
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1"
+                  >Select Operations Trip Target (ခရီးစဉ်ရွေးချယ်ရန်)</label
+                >
+                <select
+                  id="bookSchId"
+                  onchange="onBookingScheduleChange()"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                >
+                  <option value="">-- Choose Active Trip --</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1"
+                  >Passenger Name Identifier (ခရီးသည်အမည်)</label
+                >
+                <input
+                  type="text"
+                  id="bookCustName"
+                  placeholder="Full legal name"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1"
+                  >Contact Phone Line (ဆက်သွယ်ရန် ဖုန်းနံပါတ်)</label
+                >
+                <input
+                  type="text"
+                  id="bookCustPhone"
+                  placeholder="Mobile token"
+                  class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1.5"
+                  >Interactive Manifest Seat Selector Map
+                  (ထိုင်ခုံရွေးချယ်ရန်မြေပုံ)</label
+                >
+                <div
+                  id="bookingSeatSelection"
+                  class="grid grid-cols-4 gap-2 p-3 bg-slate-50 rounded-lg border border-slate-200 max-h-52 overflow-y-auto"
+                >
+                  <p class="text-slate-400 text-center text-xs py-4 col-span-4">
+                    Please map a trip profile entity configuration track first.
+                  </p>
+                </div>
+              </div>
+              <button
+                id="btnConfirmBooking"
+                class="w-full mt-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-medium py-2.5 px-4 rounded-lg transition shadow-sm flex items-center justify-center gap-2"
+              >
+                <i class="fa-solid fa-print text-slate-400"></i> Dispatch Ticket
+                Order Block (လက်မှတ်ဖြတ်မည်)
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="xl:col-span-7 bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm"
+          >
+            <div class="p-4 bg-slate-50 border-b border-slate-200">
+              <h3
+                class="font-semibold text-slate-900 text-xs uppercase tracking-wider"
+              >
+                Live Transaction Ledger Matrix (ရောင်းချပြီးသော
+                လက်မှတ်စာရင်းဇယား)
+              </h3>
+            </div>
+            <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-slate-100 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500 sticky top-0 z-10"
+                  >
+                    <th class="py-2.5 px-4 w-12">Idx</th>
+                    <th class="py-2.5 px-4 w-24">
+                      Voucher Token (ဘောက်ချာနံပါတ်)
+                    </th>
+                    <th class="py-2.5 px-4">
+                      Client Identifiers (ဝယ်ယူသူအချက်အလက်)
+                    </th>
+                    <th class="py-2.5 px-4">
+                      Allocated Slots (ရွေးချယ်ထားသောခုံများ)
+                    </th>
+                    <th class="py-2.5 px-4">
+                      Gross Ledger (စုစုပေါင်းကျသင့်ငွေ)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="tblBookings"
+                  class="text-xs divide-y divide-slate-100"
+                ></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="seats-sec" class="tab-content hidden space-y-6">
+          <div
+            class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm"
+          >
+            <div
+              class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-3 border-b border-slate-200"
+            >
+              <h2
+                class="text-sm font-semibold text-slate-900 uppercase tracking-wider"
+              >
+                Structural Cabin Node Observer (ထိုင်ခုံအခြေအနေကြည့်ရှုရန်)
+              </h2>
+              <div
+                class="flex items-center gap-4 text-xs font-medium text-slate-600"
+              >
+                <span class="flex items-center gap-1.5"
+                  ><span
+                    class="w-3.5 h-3.5 rounded bg-emerald-800 border border-emerald-950"
+                  ></span>
+                  Available / Dark Green (အားသောခုံ)</span
+                >
+                <span class="flex items-center gap-1.5"
+                  ><span
+                    class="w-3.5 h-3.5 rounded bg-rose-800 border border-rose-950"
+                  ></span>
+                  Booked / Dark Red (ရောင်းပြီးသောခုံ)</span
+                >
+              </div>
+            </div>
+
+            <div class="max-w-md mx-auto my-5">
+              <select
+                id="monitorSchId"
+                onchange="renderSeatsMonitor()"
+                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-slate-900 transition"
+              >
+                <option value="">
+                  -- Choose Target Operational Execution Plan (ခရီးစဉ်အချိန်ဇယား
+                  ရွေးချယ်ရန်) --
+                </option>
+              </select>
+            </div>
+
+            <div
+              class="max-w-[360px] mx-auto border border-slate-300 bg-slate-100 rounded-2xl p-5 shadow-sm"
+            >
+              <div
+                class="flex justify-between items-center pb-3 mb-5 border-b border-slate-300 text-slate-500 text-[11px] font-bold tracking-wider uppercase"
+              >
+                <span
+                  ><i class="fa-solid fa-dharmachakra"></i> Pilot Console
+                  (ယာဉ်မောင်းခန်း)</span
+                >
+                <div
+                  class="w-7 h-7 bg-white border border-slate-300 rounded text-slate-700 flex items-center justify-center"
+                >
+                  <i class="fa-solid fa-user-gear"></i>
+                </div>
+              </div>
+              <div id="divSeatsLayoutGrid" class="grid grid-cols-4 gap-2.5">
+                <p class="text-slate-400 text-center text-xs py-6 col-span-4">
+                  Please select an active context pipeline sequence above.
+                  (ကြည့်ရှုလိုသော ခရီးစဉ်ကို အပေါ်တွင် ရွေးချယ်ပေးပါ)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="js/jquery-4.0.0.min.js"></script>
+    <script>
+      let editingRouteId = null;
+      let editingBusId = null;
+      let editingScheduleId = null;
+      let selectedSeatsForBooking = [];
+
+      $(document).ready(function () {
+        $(".tab-btn").click(function () {
+          $(".tab-btn")
+            .removeClass("bg-slate-900 text-white shadow-sm")
+            .addClass("text-slate-600 hover:bg-slate-100");
+          $(this)
+            .addClass("bg-slate-900 text-white shadow-sm")
+            .removeClass("text-slate-600 hover:bg-slate-100");
+
+          const target = $(this).data("target");
+          $(".tab-content").addClass("hidden").removeClass("block");
+          $(target).removeClass("hidden").addClass("block");
+        });
+
+        initLocalStorageTables();
+        loadAllModulesData();
+      });
+
+      function initLocalStorageTables() {
+        if (!localStorage.getItem("routes"))
+          localStorage.setItem("routes", JSON.stringify([]));
+        if (!localStorage.getItem("buses"))
+          localStorage.setItem("buses", JSON.stringify([]));
+        if (!localStorage.getItem("schedules"))
+          localStorage.setItem("schedules", JSON.stringify([]));
+        if (!localStorage.getItem("seats"))
+          localStorage.setItem("seats", JSON.stringify([]));
+        if (!localStorage.getItem("bookings"))
+          localStorage.setItem("bookings", JSON.stringify([]));
+      }
+
+      function getTable(name) {
+        return JSON.parse(localStorage.getItem(name)) || [];
+      }
+      function saveTable(name, data) {
+        localStorage.setItem(name, JSON.stringify(data));
+      }
+
+      function loadAllModulesData() {
+        loadRoutes();
+        loadBuses();
+        loadSchedules();
+        loadBookings();
+        populateDropdowns();
+      }
+
+      function populateDropdowns() {
+        let routes = getTable("routes").filter((r) => !r.isDelete);
+        let buses = getTable("buses").filter((b) => !b.isDelete);
+        let schedules = getTable("schedules").filter((s) => !s.isDelete);
+
+        $("#schRouteId").html(
+          '<option value="">-- Choose Route (ခရီးစဉ်ရွေးရန်) --</option>',
+        );
+        routes.forEach((r) =>
+          $("#schRouteId").append(
+            `<option value="${r.id}">${r.from} to ${r.to}</option>`,
+          ),
+        );
+
+        $("#schBusId").html(
+          '<option value="">-- Choose Vehicle (ယာဉ်ရွေးရန်) --</option>',
+        );
+        buses.forEach((b) =>
+          $("#schBusId").append(
+            `<option value="${b.id}">${b.busNumber} [${b.busType}]</option>`,
+          ),
+        );
+
+        $("#bookSchId").html(
+          '<option value="">-- Choose Active Trip (အသုံးပြုနိုင်သော ခရီးစဉ်ရွေးရန်) --</option>',
+        );
+        $("#monitorSchId").html(
+          '<option value="">-- Choose Target Operational Execution Plan (ခရီးစဉ်အချိန်ဇယား ရွေးရန်) --</option>',
+        );
+
+        schedules.forEach((s) => {
+          let route = routes.find((r) => r.id === s.routeId);
+          let bus = buses.find((b) => b.id === s.busId);
+          if (route && bus) {
+            let text = `${route.from} ➔ ${route.to} (${bus.busNumber}) - ${s.time}`;
+            $("#bookSchId").append(`<option value="${s.id}">${text}</option>`);
+            $("#monitorSchId").append(
+              `<option value="${s.id}">${text}</option>`,
+            );
+          }
+        });
+      }
+
+      $("#btnSaveRoute").click(function () {
+        let from = $("#routeFrom").val().trim();
+        let to = $("#routeTo").val().trim();
+        let km = $("#routeKM").val();
+
+        if (!from || !to || !km)
+          return alert(
+            "Verify entity parameter requirements. (အချက်အလက်များ ပြည့်စုံစွာ ဖြည့်စွက်ပါ)",
+          );
+
+        let routes = getTable("routes");
+        if (editingRouteId == null) {
+          routes.push({
+            id: crypto.randomUUID(),
+            from: from,
+            to: to,
+            km: km,
+            isDelete: false,
+          });
+        } else {
+          let index = routes.findIndex((r) => r.id === editingRouteId);
+          if (index !== -1) {
+            routes[index].from = from;
+            routes[index].to = to;
+            routes[index].km = km;
+          }
+        }
+        saveTable("routes", routes);
+        clearRouteForm();
+        loadAllModulesData();
+      });
+
+      function loadRoutes() {
+        let routes = getTable("routes").filter((r) => !r.isDelete);
+        $("#tblRoutes").html("");
+        routes.forEach((r, i) => {
+          $("#tblRoutes").append(`<tr class="hover:bg-slate-50/50">
+                    <td class="py-2.5 px-4">
+                        <button class="text-slate-700 hover:bg-slate-100 rounded border px-2 py-1 text-xs mr-1" onclick="editRoute('${r.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="text-rose-600 hover:bg-rose-50 rounded border px-2 py-1 text-xs" onclick="deleteRoute('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                    <td class="py-2.5 px-4 text-slate-400 font-mono">${i + 1}</td>
+                    <td class="py-2.5 px-4 font-medium text-slate-900">${r.from}</td>
+                    <td class="py-2.5 px-4 font-medium text-slate-900">${r.to}</td>
+                    <td class="py-2.5 px-4"><span class="text-xs px-2 py-0.5 font-mono bg-slate-100 border text-slate-600 rounded">${r.km} KM</span></td>
+                </tr>`);
+        });
+      }
+      function editRoute(id) {
+        let route = getTable("routes").find((r) => r.id === id);
+        if (route) {
+          $("#routeFrom").val(route.from);
+          $("#routeTo").val(route.to);
+          $("#routeKM").val(route.km);
+          editingRouteId = id;
+          $("#btnSaveRoute")
+            .text("Update Route (လမ်းကြောင်းပြင်ဆင်ရန်)")
+            .removeClass("bg-slate-900")
+            .addClass("bg-amber-600");
+        }
+      }
+      function deleteRoute(id) {
+        if (
+          !confirm(
+            "Confirm logical exclusion check? (လမ်းကြောင်းဖျက်ရန် သေချာပါသလား?)",
+          )
+        )
+          return;
+        let routes = getTable("routes");
+        let index = routes.findIndex((r) => r.id === id);
+        if (index !== -1) routes[index].isDelete = true;
+        saveTable("routes", routes);
+        loadAllModulesData();
+      }
+      function clearRouteForm() {
+        $("#routeFrom").val("");
+        $("#routeTo").val("");
+        $("#routeKM").val("");
+        editingRouteId = null;
+        $("#btnSaveRoute")
+          .text("Save Route Node")
+          .removeClass("bg-amber-600")
+          .addClass("bg-slate-900");
+      }
+
+      // for bus CRUD
+      $("#btnSaveBus").click(function () {
+        let num = $("#busNum").val().trim();
+        let type = $("#busType").val().trim();
+        let seats = parseInt($("#busTotalSeats").val());
+
+        if (!num || !type || !seats)
+          return alert(
+            "Verify parameters configuration inputs. (အချက်အလက်များ ပြည့်စုံစွာ ဖြည့်စွက်ပါ)",
+          );
+        let buses = getTable("buses");
+
+        if (
+          editingBusId == null &&
+          buses.some((b) => b.busNumber === num && !b.isDelete)
+        ) {
+          return alert(
+            `Collision failure: Registry entry exists. (ယာဉ်အမှတ် စာရင်းရှိပြီးသား ဖြစ်နေသည်)`,
+          );
+        }
+
+        if (editingBusId == null) {
+          buses.push({
+            id: crypto.randomUUID(),
+            busNumber: num,
+            busType: type,
+            totalSeats: seats,
+            isDelete: false,
+          });
+        } else {
+          let index = buses.findIndex((b) => b.id === editingBusId);
+          if (index !== -1) {
+            buses[index].busNumber = num;
+            buses[index].busType = type;
+            buses[index].totalSeats = seats;
+          }
+        }
+        saveTable("buses", buses);
+        clearBusForm();
+        loadAllModulesData();
+      });
+
+      function loadBuses() {
+        let buses = getTable("buses").filter((b) => !b.isDelete);
+        $("#tblBuses").html("");
+        buses.forEach((b, i) => {
+          $("#tblBuses").append(`<tr class="hover:bg-slate-50/50">
+                    <td class="py-2.5 px-4">
+                        <button class="text-slate-700 hover:bg-slate-100 rounded border px-2 py-1 text-xs mr-1" onclick="editBus('${b.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="text-rose-600 hover:bg-rose-50 rounded border px-2 py-1 text-xs" onclick="deleteBus('${b.id}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                    <td class="py-2.5 px-4 text-slate-400 font-mono">${i + 1}</td>
+                    <td class="py-2.5 px-4 font-mono font-semibold text-slate-900">${b.busNumber}</td>
+                    <td class="py-2.5 px-4 text-slate-600">${b.busType}</td>
+                    <td class="py-2.5 px-4"><span class="text-xs px-2 py-0.5 bg-slate-100 text-slate-700 border font-medium rounded">${b.totalSeats} Bound</span></td>
+                </tr>`);
+        });
+      }
+      function editBus(id) {
+        let bus = getTable("buses").find((b) => b.id === id);
+        if (bus) {
+          $("#busNum").val(bus.busNumber);
+          $("#busType").val(bus.busType);
+          $("#busTotalSeats").val(bus.totalSeats);
+          editingBusId = id;
+          $("#btnSaveBus")
+            .text("Update Vehicle (ယာဉ်အချက်အလက်ပြင်ရန်)")
+            .removeClass("bg-slate-900")
+            .addClass("bg-amber-600");
+        }
+      }
+      function deleteBus(id) {
+        if (
+          !confirm(
+            "Terminate cluster resource record? (ယာဉ်စာရင်းအား ဖျက်သိမ်းရန် သေချာပါသလား?)",
+          )
+        )
+          return;
+        let buses = getTable("buses");
+        let index = buses.findIndex((b) => b.id === id);
+        if (index !== -1) buses[index].isDelete = true;
+        saveTable("buses", buses);
+        loadAllModulesData();
+      }
+      function clearBusForm() {
+        $("#busNum").val("");
+        $("#busType").val("");
+        $("#busTotalSeats").val("");
+        editingBusId = null;
+        $("#btnSaveBus")
+          .text("Register Vehicle")
+          .removeClass("bg-amber-600")
+          .addClass("bg-slate-900");
+      }
+
+      // for schedule CRUD
+      $("#btnSaveSchedule").click(function () {
+        let rId = $("#schRouteId").val();
+        let bId = $("#schBusId").val();
+        let price = $("#schPrice").val();
+        let time = $("#schTime").val();
+
+        if (!rId || !bId || !price || !time)
+          return alert(
+            "Fulfill scheduling bounds requirements. (အချိန်ဇယားအတွက် လိုအပ်ချက်များ အကုန်ဖြည့်ပါ)",
+          );
+
+        let schedules = getTable("schedules");
+
+        if (editingScheduleId == null) {
+          let schId = crypto.randomUUID();
+          schedules.push({
+            id: schId,
+            routeId: rId,
+            busId: bId,
+            ticketPrice: price,
+            time: time,
+            isDelete: false,
+          });
+          saveTable("schedules", schedules);
+
+          let targetBus = getTable("buses").find((b) => b.id === bId);
+          let seats = getTable("seats");
+          let seatCount = 1;
+
+          while (seatCount <= targetBus.totalSeats) {
+            let currentRowNumber = Math.ceil(seatCount / 4);
+            let seatNumberInRow = ((seatCount - 1) % 4) + 1;
+            let rowLetter = String.fromCharCode(65 + (currentRowNumber - 1));
+
+            seats.push({
+              id: crypto.randomUUID(),
+              scheduleId: schId,
+              seatNumber: `${rowLetter}${seatNumberInRow}`,
+              isBooked: false,
+              bookingId: null,
+              isDelete: false,
+            });
+            seatCount++;
+          }
+          saveTable("seats", seats);
+        } else {
+          let idx = schedules.findIndex((s) => s.id === editingScheduleId);
+          if (idx !== -1) {
+            schedules[idx].routeId = rId;
+            schedules[idx].busId = bId;
+            schedules[idx].ticketPrice = price;
+            schedules[idx].time = time;
+          }
+          saveTable("schedules", schedules);
+        }
+
+        clearScheduleForm();
+        loadAllModulesData();
+      });
+
+      function loadSchedules() {
+        let schedules = getTable("schedules").filter((s) => !s.isDelete);
+        let routes = getTable("routes");
+        let buses = getTable("buses");
+        $("#tblSchedules").html("");
+
+        schedules.forEach((s, i) => {
+          let route = routes.find((r) => r.id === s.routeId);
+          let bus = buses.find((b) => b.id === s.busId);
+          if (route && bus) {
+            $("#tblSchedules").append(`<tr class="hover:bg-slate-50/50">
+                        <td class="py-2.5 px-4">
+                            <button class="text-slate-700 hover:bg-slate-100 rounded border px-2 py-1 text-xs mr-1" onclick="editSchedule('${s.id}')"><i class="fa-solid fa-pen"></i></button>
+                            <button class="text-rose-600 hover:bg-rose-50 rounded border px-2 py-1 text-xs" onclick="deleteSchedule('${s.id}')"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                        <td class="py-2.5 px-4 text-slate-400 font-mono">${i + 1}</td>
+                        <td class="py-2.5 px-4 font-semibold text-slate-900">${route.from} ➔ ${route.to}</td>
+                        <td class="py-2.5 px-4 font-mono text-slate-600">${bus.busNumber}</td>
+                        <td class="py-2.5 px-4 font-semibold text-slate-900">${parseInt(s.ticketPrice).toLocaleString()} MMK</td>
+                        <td class="py-2.5 px-4 text-xs font-mono text-slate-500">${s.time}</td>
+                    </tr>`);
+          }
+        });
+      }
+
+      function editSchedule(id) {
+        let sch = getTable("schedules").find((s) => s.id === id);
+        if (sch) {
+          $("#schRouteId").val(sch.routeId);
+          $("#schBusId").val(sch.busId);
+          $("#schPrice").val(sch.ticketPrice);
+          $("#schTime").val(sch.time);
+
+          editingScheduleId = id;
+          $("#btnSaveSchedule")
+            .text("Update Schedule (အချိန်ဇယားပြင်ရန်)")
+            .removeClass("bg-slate-900")
+            .addClass("bg-amber-600");
+          $("#btnCancelSchedule").removeClass("hidden");
+        }
+      }
+
+      function deleteSchedule(id) {
+        if (
+          !confirm(
+            "Terminate runtime voyage matrix index? (ဤခရီးစဉ်အချိန်ဇယားအား ဖျက်သိမ်းရန် သေချာပါသလား?)",
+          )
+        )
+          return;
+        let schedules = getTable("schedules");
+        let idx = schedules.findIndex((s) => s.id === id);
+        if (idx !== -1) schedules[idx].isDelete = true;
+        saveTable("schedules", schedules);
+        loadAllModulesData();
+      }
+
+      //for booking CRUD
+      function onBookingScheduleChange() {
+        let schId = $("#bookSchId").val();
+        selectedSeatsForBooking = [];
+        if (!schId) {
+          $("#bookingSeatSelection").html(
+            '<p class="text-slate-400 text-center text-xs py-4 col-span-4">Please map a trip profile entity configuration track first. (ကြည့်ရှုလိုသော ခရီးစဉ်ကို အပေါ်တွင် အရင်ရွေးချယ်ပေးပါ)</p>',
+          );
+          return;
+        }
+
+        let allSeats = getTable("seats").filter(
+          (s) => s.scheduleId === schId && !s.isDelete,
+        );
+        $("#bookingSeatSelection").html("");
+
+        allSeats.forEach((s) => {
+          if (s.isBooked) {
+            $("#bookingSeatSelection").append(`
+                        <button type="button" class="w-full bg-rose-800 border border-rose-950 text-rose-100 text-xs font-bold py-2 rounded-md cursor-not-allowed opacity-60" disabled>
+                            ${s.seatNumber}
+                        </button>
+                    `);
+          } else {
+            $("#bookingSeatSelection").append(`
+                        <button type="button" id="seatBtn-${s.id}" onclick="toggleSelectSeat('${s.id}', '${s.seatNumber}')" class="w-full bg-emerald-800 border border-emerald-950 text-emerald-50 hover:bg-emerald-700 text-xs font-semibold py-2 rounded-md transition duration-100">
+                            ${s.seatNumber}
+                        </button>
+                    `);
+          }
+        });
+      }
+
+      function toggleSelectSeat(id, seatNo) {
+        let btn = $(`#seatBtn-${id}`);
+        let idx = selectedSeatsForBooking.indexOf(seatNo);
+
+        if (idx === -1) {
+          selectedSeatsForBooking.push(seatNo);
+
+          btn
+            .removeClass("bg-emerald-800 text-emerald-50 border-emerald-950")
+            .addClass(
+              "bg-amber-500 border-amber-600 text-slate-900 shadow-sm font-bold",
+            );
+        } else {
+          selectedSeatsForBooking.splice(idx, 1);
+          btn
+            .removeClass(
+              "bg-amber-500 border-amber-600 text-slate-900 shadow-sm font-bold",
+            )
+            .addClass("bg-emerald-800 text-emerald-50 border-emerald-950");
+        }
+      }
+
+      $("#btnConfirmBooking").click(function () {
+        let schId = $("#bookSchId").val();
+        let name = $("#bookCustName").val().trim();
+        let phone = $("#bookCustPhone").val().trim();
+
+        if (!schId || !name || !phone || selectedSeatsForBooking.length === 0) {
+          return alert(
+            "Complete requirements context constraints data elements correctly. (လက်မှတ်ဖြတ်ရန် အချက်အလက်နှင့် ထိုင်ခုံများ ပြည့်စုံစွာရွေးချယ်ပါ)",
+          );
+        }
+
+        let seatsSnapshot = getTable("seats");
+        let bookings = getTable("bookings");
+        let schedules = getTable("schedules");
+
+        try {
+          let sch = schedules.find((s) => s.id === schId);
+          let totalAmount = sch.ticketPrice * selectedSeatsForBooking.length;
+          let bookingId = crypto.randomUUID();
+
+          for (let seatNo of selectedSeatsForBooking) {
+            let dbSeatIndex = seatsSnapshot.findIndex(
+              (s) =>
+                s.scheduleId === schId &&
+                s.seatNumber === seatNo &&
+                !s.isDelete,
+            );
+            if (dbSeatIndex === -1)
+              throw new Error(
+                `Mapping node address miss fault. (ထိုင်ခုံတည်နေရာ ရှာမတွေ့ပါ)`,
+              );
+            if (seatsSnapshot[dbSeatIndex].isBooked)
+              throw new Error(
+                `Seat allocated thread transaction concurrency exception. (ထိုင်ခုံအား အခြားသူတစ်ယောက်မှ ရွေးချယ်သွားပါသည်)`,
+              );
+
+            seatsSnapshot[dbSeatIndex].isBooked = true;
+            seatsSnapshot[dbSeatIndex].bookingId = bookingId;
+          }
+
+          bookings.push({
+            id: bookingId,
+            customerName: name,
+            customerPhone: phone,
+            scheduleId: schId,
+            seatNumbers: selectedSeatsForBooking,
+            totalPrice: totalAmount,
+          });
+
+          saveTable("seats", seatsSnapshot);
+          saveTable("bookings", bookings);
+
+          $("#bookCustName").val("");
+          $("#bookCustPhone").val("");
+          selectedSeatsForBooking = [];
+          loadAllModulesData();
+          onBookingScheduleChange();
+        } catch (error) {
+          alert(`Transaction Error state: ${error.message}`);
+          loadAllModulesData();
+        }
+      });
+
+      function loadBookings() {
+        let bookings = getTable("bookings");
+        $("#tblBookings").html("");
+
+        bookings.reverse().forEach((b, i) => {
+          $("#tblBookings").append(`<tr class="hover:bg-slate-50/50">
+                    <td class="py-2 px-4 font-mono text-slate-400">${i + 1}</td>
+                    <td class="py-2 px-4 font-mono text-slate-500">#${b.id.substring(0, 6)}</td>
+                    <td class="py-2 px-4">
+                        <div class="font-medium text-slate-900">${b.customerName}</div>
+                        <div class="text-[11px] text-slate-400 font-mono">${b.customerPhone}</div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="flex flex-wrap gap-1">
+                            ${b.seatNumbers.map((s) => `<span class="bg-slate-800 text-white font-mono text-[10px] px-1.5 py-0.5 rounded">${s}</span>`).join("")}
+                        </div>
+                    </td>
+                    <td class="py-2 px-4 font-mono font-semibold text-slate-900">${b.totalPrice.toLocaleString()} MMK</td>
+                </tr>`);
+        });
+      }
+
+      function renderSeatsMonitor() {
+        let schId = $("#monitorSchId").val();
+        if (!schId) {
+          $("#divSeatsLayoutGrid").html(
+            '<p class="text-slate-400 text-center text-xs py-6 col-span-4">Select an active context pipeline sequence above.</p>',
+          );
+          return;
+        }
+
+        let seats = getTable("seats").filter(
+          (s) => s.scheduleId === schId && !s.isDelete,
+        );
+        $("#divSeatsLayoutGrid").html("");
+
+        seats.forEach((s) => {
+          let bgClass = s.isBooked
+            ? "bg-rose-800 border-rose-950 text-rose-100 font-bold"
+            : "bg-emerald-800 border-emerald-950 text-emerald-50";
+          $("#divSeatsLayoutGrid").append(`
+                    <div>
+                        <div class="${bgClass} border text-center font-mono text-xs py-2.5 rounded shadow-sm transition duration-150">
+                            ${s.seatNumber}
+                        </div>
+                    </div>
+                `);
+        });
+      }
+
+      function clearScheduleForm() {
+        $("#schRouteId").val("");
+        $("#schBusId").val("");
+        $("#schPrice").val("");
+        $("#schTime").val("");
+        editingScheduleId = null;
+        $("#btnSaveSchedule")
+          .text("Commit Schedule")
+          .removeClass("bg-amber-600")
+          .addClass("bg-slate-900");
+        $("#btnCancelSchedule").addClass("hidden");
+      }
+    </script>
+  </body>
+</html>
