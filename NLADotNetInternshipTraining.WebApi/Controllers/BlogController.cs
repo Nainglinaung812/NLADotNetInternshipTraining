@@ -8,11 +8,17 @@ namespace NLADotNetInternshipTraining.WebApi.Controllers;
 [Route("api/[controller]")]
 public class BlogController : ControllerBase
 {
-    private readonly AppDbContext _db = new AppDbContext();
+    private readonly AppDbContext _db;
+
+    public BlogController(AppDbContext db)
+    {
+        _db = db;
+    }
+
     [HttpGet]
     public IActionResult GetBLogs()
     {
-        var lst = _db.TblBlogs.ToList();
+        var lst = _db.TblBlogs.OrderByDescending(b => b.BlogId).ToList();
         return Ok(lst);
     }
     [HttpGet("{id}")]

@@ -1,0 +1,20 @@
+@model BlogEditResponseModel
+
+<form action="/blog/update/@Model.Data.Id" method="post">
+    <div class="mb-3">
+        <label for="txtTitle" class="form-label">Title</label>
+        <input type="text" class="form-control" name="Title" id="txtTitle" placeholder="Enter title" value="@Model.Data.Title">
+    </div>
+
+    <div class="mb-3">
+        <label for="txtAuthor" class="form-label">Author</label>
+        <input type="text" class="form-control" name="Author" id="txtAuthor" placeholder="Enter author name" value="@Model.Data.Author">
+    </div>
+
+    <div class="mb-3">
+        <label for="txtContent" class="form-label">Content</label>
+        <textarea class="form-control" name="Content" id="txtContent" rows="5" placeholder="Enter content">@Model.Data.Content</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/blog" class="btn btn-secondary">Cancel</a>
+</form>

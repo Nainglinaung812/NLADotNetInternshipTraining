@@ -1,0 +1,41 @@
+<div class="mb-3">
+    <label class="form-label">Title</label>
+    <input type="text" class="form-control" id="txtTitle">
+</div>
+<div class="mb-3">
+    <label class="form-label">Author</label>
+    <input type="text" class="form-control" id="txtAuthor">
+</div>
+<div class="mb-3">
+    <label class="form-label">Content</label>
+    <textarea class="form-control" id="txtContent" rows="3"></textarea>
+</div>
+<a href="/blog" class="btn btn-secondary">Cancel</a>
+<button type="button" class="btn btn-primary" id="btnSave">Save</button>
+
+@section scripts {
+    <script>
+        $('#btnSave').click(function () {
+            const blogData = {
+                Title: $('#txtTitle').val(),
+                Author: $('#txtAuthor').val(),
+                Content: $('#txtContent').val()
+            };
+
+            $.ajax({
+                url: "/BlogAjax/Save",
+                type: "POST",
+                data: { requestModel : blogData },
+                success: function (response) {
+                    alert(response.Message);
+                    if (response.IsSuccess) {
+                        window.location.href = "/blogajax";
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    </script>
+}

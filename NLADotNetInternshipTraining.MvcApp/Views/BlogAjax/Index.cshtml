@@ -1,0 +1,75 @@
+@{
+    ViewData["Title"] = "Blog List";
+}
+
+<h1>Blog List</h1>
+<a href="/blogajax/create" class="btn btn-success mb-3">New Blog</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="blogTableBody">
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        loadBlogs();
+
+        function loadBlogs() {
+            $.ajax({
+                url: "/BlogAjax/List",
+                type: "GET",
+                success: function (response) {
+                    console.log(response);
+                    let tableRows = '';
+                    response.forEach(item => {
+                        tableRows += `
+                                    <tr id="blog-row-${item.BlogId}">
+                                        <td>${item.BlogId}</td>
+                                        <td>${item.BlogTitle}</td>
+                                        <td>${item.BlogAuthor}</td>
+                                        <td>
+                                            <a href="/blogajax/edit/${item.BlogId}" class="btn btn-warning btn-sm">Edit</a>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteBlog(${item.BlogId})">Delete</button>
+                                        </td>
+                                    </tr>
+                                `;
+                    });
+                    $('#blogTableBody').html(tableRows);
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+        function deleteBlog(id) {
+            // JavaScript ရဲ့ standard confirm dialog (Yes/No Box)
+            let ans = confirm("Are you sure you want to delete this blog?");
+
+            if (ans) {
+                $.ajax({
+                    url: "/BlogAjax/Delete",
+                    type: "POST",
+                    data: { requestModel: { Id: id } },
+                    success: function (response) {
+                        alert(response.Message);
+                        if (response.IsSuccess) {
+                            // Page ကို reload မလုပ်ဘဲ Table row ကို UI ပေါ်ကနေ တိုက်ရိုက် ဖျက်ထုတ်ခြင်း
+                            $(`#blog-row-${id}`).remove();
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+}
