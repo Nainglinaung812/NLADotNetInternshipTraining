@@ -1,0 +1,6 @@
+@NLADotNetInternshipTraining.EmployeeLeaveSystem_HostAddress = http://localhost:5171
+
+GET {{NLADotNetInternshipTraining.EmployeeLeaveSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
