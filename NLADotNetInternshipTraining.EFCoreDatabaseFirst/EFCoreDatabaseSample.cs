@@ -1,16 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-//  EFCoreDatabaseSample.cs ရဲ့ အပေါ်ဆုံးမှာ ဒါလေး ထည့်ပေးပါ-
-using NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database.AppDbContextModels;
+using NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2.AppDbContextModels;
 namespace NLADotNetInternshipTraining.EFCoreDatabaseFirstSample;
 
 public class EFCoreDatabaseSample
 {
-    private readonly AppDbContext _db;
-    public EFCoreDatabaseSample()
-    {
-        _db = new AppDbContext();
-    }
+    private readonly NladotNetInternshipTrainingContext _db = new NladotNetInternshipTrainingContext();
+
     public void Read()
     {
         // AppDbContext db = new AppDbContext();

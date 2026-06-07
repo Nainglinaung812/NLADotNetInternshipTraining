@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database\NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database.csproj" />
+    <ProjectReference Include="..\NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2\NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

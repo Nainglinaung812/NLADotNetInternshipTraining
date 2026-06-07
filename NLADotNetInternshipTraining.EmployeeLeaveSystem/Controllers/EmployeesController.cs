@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NLADotNetInternshipTraining.EmployeeLeaveSystem.Database.Models; 
+using NLADotNetInternshipTraining.EmployeeLeaveSystem.Database.Models;
 using NLADotNetInternshipTraining.EmployeeLeaveSystem.Models;
 
 namespace NLADotNetInternshipTraining.EmployeeLeaveSystem.Controllers;
@@ -20,7 +20,15 @@ public class EmployeesController : ControllerBase
     public IActionResult GetEmployees()
     {
         var lst = _db.Employees.Where(e => !e.IsDeleted).OrderByDescending(e => e.Id).ToList();
-        return Ok(lst);
+        var responseData = lst.Select(e => new EmployeeModel
+        {
+            Id = e.Id,
+            Name = e.Name,
+            Department = e.Department,
+            JoinDate = e.JoinDate,
+            TotalLeaveBalance = e.TotalLeaveBalance
+        }).ToList();
+        return Ok(responseData);
     }
 
     [HttpGet("{id}")]
@@ -31,8 +39,17 @@ public class EmployeesController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(item);
+        var responseData = new EmployeeModel
+        {
+            Id = item.Id,
+            Name = item.Name,
+            Department = item.Department,
+            JoinDate = item.JoinDate,
+            TotalLeaveBalance = item.TotalLeaveBalance
+        };
+        return Ok(responseData);
     }
+
 
     [HttpPost]
     public IActionResult CreateEmployee(EmployeeCreateRequestModel request)
@@ -77,6 +94,57 @@ public class EmployeesController : ControllerBase
         {
             IsSuccess = result > 0,
             Message = result > 0 ? "Employee Updated Successfully" : "Update Failed"
+        });
+    }
+    [HttpPatch("{id}")]
+    public IActionResult PatchEmployee(int id, EmployeePatchRequestModel request)
+    {
+        var item = _db.Employees.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+        if (item is null)
+        {
+            return NotFound(new EmployeePatchResponseModel { IsSuccess = false, Message = "Employee not found" });
+        }
+
+        int count = 0;
+
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            item.Name = request.Name;
+            count++;
+        }
+        if (!string.IsNullOrEmpty(request.Department))
+        {
+            item.Department = request.Department;
+            count++;
+        }
+
+        if (request.TotalLeaveBalance.HasValue)
+        {
+            item.TotalLeaveBalance = request.TotalLeaveBalance.Value;
+            count++;
+        }
+
+        if (count == 0)
+        {
+            return BadRequest(new EmployeePatchResponseModel { IsSuccess = false, Message = "No fields provided to update" });
+        }
+
+        item.ModifiedDateTime = DateTime.Now;
+        item.ModifiedBy = request.ModifiedBy ?? "Admin";
+
+        int result = _db.SaveChanges();
+
+        return Ok(new EmployeePatchResponseModel
+        {
+            IsSuccess = result > 0,
+            Message = result > 0 ? "Employee Patched Successfully" : "Patch Failed",
+            Data = new EmployeePatchDataModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Department = item.Department,
+                TotalLeaveBalance = item.TotalLeaveBalance
+            }
         });
     }
 

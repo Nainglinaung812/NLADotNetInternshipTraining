@@ -5,7 +5,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.16">
@@ -16,4 +15,3 @@
   </ItemGroup>
 
 </Project>
-<!-- dotnet ef dbcontext scaffold "Server=localhost,1433;Database=NLADotNetInternshipTraining;User Id=sa;Password=Linn@81220015228;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -o AppDbContextModels -d -->

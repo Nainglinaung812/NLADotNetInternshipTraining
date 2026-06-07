@@ -85,3 +85,52 @@ public class LeaveTypeUpdateRequestModel
 }
 public class LeaveTypeUpdateResponseModel { public bool IsSuccess { get; set; } public string? Message { get; set; } }
 public class LeaveTypeDeleteResponseModel { public bool IsSuccess { get; set; } public string? Message { get; set; } }
+public class EmployeePatchRequestModel
+{
+    public string? Name { get; set; }
+    public string? Department { get; set; }
+    public int? TotalLeaveBalance { get; set; } 
+    public string? ModifiedBy { get; set; }
+}
+
+public class EmployeePatchResponseModel
+{
+    public bool IsSuccess { get; set; }
+    public string? Message { get; set; }
+    public EmployeePatchDataModel? Data { get; set; } 
+}
+
+public class EmployeePatchDataModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Department { get; set; } = null!;
+    public int TotalLeaveBalance { get; set; }
+}
+public class EmployeeModel
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Department { get; set; } = null!;
+    public DateTime JoinDate { get; set; }
+    public int TotalLeaveBalance { get; set; }
+}
+public class LeaveTypeModel
+{
+    public int Id { get; set; }
+    public string TypeName { get; set; } = null!;
+    public int MaxDaysAllowed { get; set; }
+}
+public class LeaveTypePatchRequestModel
+{
+    public string? TypeName { get; set; }
+    public int? MaxDaysAllowed { get; set; }
+    public string? ModifiedBy { get; set; }
+}
+
+public class LeaveTypePatchResponseModel
+{
+    public bool IsSuccess { get; set; }
+    public string? Message { get; set; }
+    public LeaveTypeModel? Data { get; set; } 
+}

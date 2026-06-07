@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using NLADotNetInternshipTraining.EmployeeLeaveSystem.Database.Models; 
+using NLADotNetInternshipTraining.EmployeeLeaveSystem.Database.Models;
 using NLADotNetInternshipTraining.EmployeeLeaveSystem.Models;
 
 namespace NLADotNetInternshipTraining.EmployeeLeaveSystem.Controllers;
@@ -19,7 +19,13 @@ public class LeaveTypesController : ControllerBase
     public IActionResult GetLeaveTypes()
     {
         var lst = _db.LeaveTypes.Where(l => !l.IsDeleted).ToList();
-        return Ok(lst);
+        var responseData = lst.Select(l => new LeaveTypeModel
+        {
+            Id = l.Id,
+            TypeName = l.TypeName,
+            MaxDaysAllowed = l.MaxDaysAllowed
+        }).ToList();
+        return Ok(responseData);
     }
 
     [HttpGet("{id}")]
@@ -27,7 +33,13 @@ public class LeaveTypesController : ControllerBase
     {
         var item = _db.LeaveTypes.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
         if (item is null) return NotFound();
-        return Ok(item);
+        var responseData = new LeaveTypeModel
+        {
+            Id = item.Id,
+            TypeName = item.TypeName,
+            MaxDaysAllowed = item.MaxDaysAllowed
+        };
+        return Ok(responseData);
     }
 
     [HttpPost]
@@ -63,6 +75,51 @@ public class LeaveTypesController : ControllerBase
 
         int result = _db.SaveChanges();
         return Ok(new LeaveTypeUpdateResponseModel { IsSuccess = result > 0, Message = result > 0 ? "Updated Successfully" : "Failed" });
+    }
+    [HttpPatch("{id}")]
+    public IActionResult PatchLeaveType(int id, LeaveTypePatchRequestModel request)
+    {
+        var item = _db.LeaveTypes.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+        if (item is null)
+        {
+            return NotFound(new LeaveTypePatchResponseModel { IsSuccess = false, Message = "Leave Type not found" });
+        }
+
+        int count = 0;
+
+        if (!string.IsNullOrEmpty(request.TypeName))
+        {
+            item.TypeName = request.TypeName;
+            count++;
+        }
+
+        if (request.MaxDaysAllowed.HasValue)
+        {
+            item.MaxDaysAllowed = request.MaxDaysAllowed.Value;
+            count++;
+        }
+
+        if (count == 0)
+        {
+            return BadRequest(new LeaveTypePatchResponseModel { IsSuccess = false, Message = "No fields provided to update" });
+        }
+
+        item.ModifiedDateTime = DateTime.Now;
+        item.ModifiedBy = request.ModifiedBy ?? "Admin";
+
+        int result = _db.SaveChanges();
+
+        return Ok(new LeaveTypePatchResponseModel
+        {
+            IsSuccess = result > 0,
+            Message = result > 0 ? "Leave Type Patched Successfully" : "Patch Failed",
+            Data = new LeaveTypeModel
+            {
+                Id = item.Id,
+                TypeName = item.TypeName,
+                MaxDaysAllowed = item.MaxDaysAllowed
+            }
+        });
     }
 
     [HttpDelete("{id}")]

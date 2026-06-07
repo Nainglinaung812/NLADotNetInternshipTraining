@@ -21,6 +21,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.RestSharpSample", "NLADotNetInternshipTraining.RestSharpSample\NLADotNetInternshipTraining.RestSharpSample.csproj", "{72C6BF0F-5CEA-49E3-900B-F713C3E5EBC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.AdoDotNetSample2", "NLADotNetInternshipTraining.AdoDotNetSample2\NLADotNetInternshipTraining.AdoDotNetSample2.csproj", "{A9C03EF6-2884-4ABA-9521-055BF1A85048}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.DapperSample2", "NLADotNetInternshipTraining.DapperSample2\NLADotNetInternshipTraining.DapperSample2.csproj", "{AEE6DDDA-914B-4F83-9A75-682FEF42D049}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2", "NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2\NLADotNetInternshipTraining.EFCoreDatabaseFirst.Database2.csproj", "{BAC25D58-845D-47E5-9FBA-59981681EFBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.EFCoreDatabaseFirst2", "NLADotNetInternshipTraining.EFCoreDatabaseFirst2\NLADotNetInternshipTraining.EFCoreDatabaseFirst2.csproj", "{CD13C8D3-8CC7-49DA-AE5E-812083640242}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.EmployeeLeaveSystem.Database", "NLADotNetInternshipTraining.EmployeeLeaveSystem.Database\NLADotNetInternshipTraining.EmployeeLeaveSystem.Database.csproj", "{B0171F94-E45B-4D79-BB24-C9BF4F81E0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.EmployeeLeaveSystem", "NLADotNetInternshipTraining.EmployeeLeaveSystem\NLADotNetInternshipTraining.EmployeeLeaveSystem.csproj", "{2BF3A016-C8D2-4190-A9E0-677FE75A2A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.HospitalAppointmentSystem.Database", "NLADotNetInternshipTraining.HospitalAppointmentSystem.Database\NLADotNetInternshipTraining.HospitalAppointmentSystem.Database.csproj", "{186FFAEB-CF0F-4BB1-84B2-A69D813D0D20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.HospitalAppointmentSystem", "NLADotNetInternshipTraining.HospitalAppointmentSystem\NLADotNetInternshipTraining.HospitalAppointmentSystem.csproj", "{521FBE0A-37E2-4801-8EDD-B059724EA14C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +82,37 @@ Global
 		{72C6BF0F-5CEA-49E3-900B-F713C3E5EBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72C6BF0F-5CEA-49E3-900B-F713C3E5EBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72C6BF0F-5CEA-49E3-900B-F713C3E5EBC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9C03EF6-2884-4ABA-9521-055BF1A85048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9C03EF6-2884-4ABA-9521-055BF1A85048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9C03EF6-2884-4ABA-9521-055BF1A85048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9C03EF6-2884-4ABA-9521-055BF1A85048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEE6DDDA-914B-4F83-9A75-682FEF42D049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEE6DDDA-914B-4F83-9A75-682FEF42D049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEE6DDDA-914B-4F83-9A75-682FEF42D049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEE6DDDA-914B-4F83-9A75-682FEF42D049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAC25D58-845D-47E5-9FBA-59981681EFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAC25D58-845D-47E5-9FBA-59981681EFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAC25D58-845D-47E5-9FBA-59981681EFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAC25D58-845D-47E5-9FBA-59981681EFBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD13C8D3-8CC7-49DA-AE5E-812083640242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD13C8D3-8CC7-49DA-AE5E-812083640242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD13C8D3-8CC7-49DA-AE5E-812083640242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD13C8D3-8CC7-49DA-AE5E-812083640242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0171F94-E45B-4D79-BB24-C9BF4F81E0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0171F94-E45B-4D79-BB24-C9BF4F81E0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0171F94-E45B-4D79-BB24-C9BF4F81E0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0171F94-E45B-4D79-BB24-C9BF4F81E0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF3A016-C8D2-4190-A9E0-677FE75A2A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF3A016-C8D2-4190-A9E0-677FE75A2A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF3A016-C8D2-4190-A9E0-677FE75A2A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF3A016-C8D2-4190-A9E0-677FE75A2A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{186FFAEB-CF0F-4BB1-84B2-A69D813D0D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{186FFAEB-CF0F-4BB1-84B2-A69D813D0D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{186FFAEB-CF0F-4BB1-84B2-A69D813D0D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{186FFAEB-CF0F-4BB1-84B2-A69D813D0D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
