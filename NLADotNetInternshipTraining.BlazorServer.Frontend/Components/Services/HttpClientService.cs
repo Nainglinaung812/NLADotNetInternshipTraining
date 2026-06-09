@@ -5,7 +5,7 @@ namespace NLADotNetInternshipTraining.BlazorServer.Frontend.Services;
 
 public class HttpClientService
 {
-    // IHttpClientFactory ကို ပြန်သုံးထားပါတယ်
+    
     private readonly IHttpClientFactory _httpClientFactory;
 
     public HttpClientService(IHttpClientFactory httpClientFactory)
@@ -20,13 +20,11 @@ public class HttpClientService
 
         if (obj != null)
         {
-            // object extension သို့မဟုတ် Newtonsoft သုံးပြီး JSON ပြောင်းတာကို စစ်ဆေးပါ
-            // အဆင်မပြေရင် JsonConvert.SerializeObject(obj) ကို သုံးနိုင်ပါတယ်
+         
             content = new StringContent(obj.ToJson(), Encoding.UTF8, "application/json");
         }
 
-        // --- အရေးကြီးဆုံးအချက် ---
-        // Program.cs မှာ ပေးခဲ့မယ့် နာမည် ("BlogApi") အတိုင်း ဒီမှာ တိတိကျကျ လှမ်းခေါ်ရပါမယ်
+     
         var client = _httpClientFactory.CreateClient("BlogApi");
 
         switch (method)
