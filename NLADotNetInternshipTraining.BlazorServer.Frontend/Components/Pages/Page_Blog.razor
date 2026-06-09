@@ -1,0 +1,53 @@
+@page "/blog"
+@* @inject IJSRuntime JSRuntime *@
+@* @inject HttpClientService HttpClientService *@
+@* @inject IHttpClientFactory HttpClientFactory *@
+
+
+@* @inject AppDbContext _db *@
+
+<PageTitle>Blog</PageTitle>
+
+<h1>Blog</h1>
+
+<div class="mb-3">
+    <label for="blogTitle" class="form-label">Title</label>
+    <input type="text" class="form-control" id="blogTitle" @bind-value="data.Title" placeholder="Enter title">
+</div>
+
+<div class="mb-3">
+    <label for="blogAuthor" class="form-label">Author</label>
+    <input type="text" class="form-control" id="blogAuthor" @bind-value="data.Author" placeholder="Enter author">
+</div>
+
+<div class="mb-3">
+    <label for="blogContent" class="form-label">Content</label>
+    <textarea class="form-control" id="blogContent" rows="4" @bind="data.Content"
+              placeholder="Enter content"></textarea>
+</div>
+<button class="btn btn-outline-success" type="button" @onclick="Save">Save</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Content</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blog in blogs)
+        {
+            <tr>
+                <td>@blog.Title</td>
+                <td>@blog.Author</td>
+                <td>@blog.Content</td>
+                <td>
+                    <button class="btn btn-outline-warning" @onclick="() => Edit(blog.Id)">Edit</button>
+                    <button class="btn btn-outline-danger" @onclick="() => Delete(blog.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
