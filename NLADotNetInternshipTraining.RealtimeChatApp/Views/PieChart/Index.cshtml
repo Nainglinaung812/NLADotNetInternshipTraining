@@ -1,0 +1,527 @@
+@{
+    ViewData["Title"] = "Real-time Browser Market Share";
+}
+
+<!-- Google Fonts & FontAwesome -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<style>
+    :root {
+        --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        --panel-bg: rgba(30, 41, 59, 0.45);
+        --panel-border: rgba(255, 255, 255, 0.08);
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent-primary: #818cf8;
+        --accent-secondary: #c084fc;
+        --accent-hover: #6366f1;
+        --success: #34d399;
+        --danger: #f87171;
+    }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        background: var(--bg-gradient);
+        color: var(--text-primary);
+        min-height: 100vh;
+    }
+
+    /* Override bootstrap default navbar or spacing container if needed */
+    .dashboard-container {
+        padding: 2.5rem 0;
+    }
+
+    .glass-card {
+        background: var(--panel-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--panel-border);
+        border-radius: 1.25rem;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+    }
+
+    .glass-card:hover {
+        border-color: rgba(129, 140, 248, 0.25);
+        box-shadow: 0 12px 40px 0 rgba(129, 140, 248, 0.1);
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    /* SignalR status badge */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.5rem 1rem;
+        border-radius: 50rem;
+        border: 1px solid var(--panel-border);
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--danger);
+        box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7);
+    }
+
+    .status-dot.connected {
+        background-color: var(--success);
+        animation: pulse 2s infinite;
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+        }
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 10px rgba(52, 211, 153, 0);
+        }
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0);
+        }
+    }
+
+    /* Custom Input Fields */
+    .form-group label {
+        color: var(--text-secondary);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .custom-input {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid var(--panel-border);
+        border-radius: 0.75rem;
+        color: var(--text-primary);
+        padding: 0.75rem 1rem;
+        width: 100%;
+        transition: all 0.2s;
+        font-size: 1rem;
+    }
+
+    .custom-input:focus {
+        outline: none;
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.25);
+        background: rgba(15, 23, 42, 0.8);
+    }
+
+    /* Action Buttons */
+    .btn-gradient {
+        background: linear-gradient(135deg, var(--accent-primary) 0%, #6366f1 100%);
+        border: none;
+        border-radius: 0.75rem;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-gradient:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        background: linear-gradient(135deg, #8b95f9 0%, #4f46e5 100%);
+    }
+
+    .btn-gradient:active {
+        transform: translateY(0);
+    }
+
+    /* Modern Table styling */
+    .table-container {
+        max-height: 350px;
+        overflow-y: auto;
+        margin-top: 1.5rem;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--text-primary);
+    }
+
+    .custom-table th {
+        background: rgba(15, 23, 42, 0.4);
+        padding: 0.875rem 1rem;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        border-bottom: 2px solid var(--panel-border);
+    }
+
+    .custom-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--panel-border);
+        font-size: 0.95rem;
+        vertical-align: middle;
+    }
+
+    .custom-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .action-btn {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        transition: color 0.2s, transform 0.2s;
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+    }
+
+    .action-btn.edit:hover {
+        color: var(--accent-primary);
+        transform: scale(1.1);
+    }
+
+    .action-btn.delete:hover {
+        color: var(--danger);
+        transform: scale(1.1);
+    }
+
+    /* Highcharts customization container */
+    #chartContainer {
+        width: 100%;
+        height: 400px;
+        background: transparent;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+</style>
+
+<div class="container dashboard-container">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="page-title">Real-time Dashboard</h1>
+            <p class="page-subtitle">SignalR & Highcharts dynamic browser market share tracker</p>
+        </div>
+        <div class="col-md-4 text-md-end mb-3 mb-md-0">
+            <div class="status-badge">
+                <span id="statusDot" class="status-dot"></span>
+                <span id="statusText">Connecting to Live Data...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Chart Panel -->
+        <div class="col-lg-7">
+            <div class="glass-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="m-0" style="font-weight: 600; font-size: 1.3rem;">Market Share Distribution</h3>
+                    <i class="fa-solid fa-chart-pie text-muted"></i>
+                </div>
+                <div id="chartContainer"></div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="col-lg-5">
+            <div class="glass-card d-flex flex-column justify-content-between">
+                <div>
+                    <h3 class="mb-4" style="font-weight: 600; font-size: 1.3rem;">Manage Data</h3>
+                    
+                    <form id="dataForm">
+                        <div class="form-group mb-3">
+                            <label for="browserName">Browser / Category Name</label>
+                            <input type="text" id="browserName" class="custom-input" placeholder="e.g. Chrome, Brave, Safari" required />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="shareValue">Market Share (%)</label>
+                            <input type="number" step="0.01" min="0" max="100" id="shareValue" class="custom-input" placeholder="e.g. 15.5" required />
+                        </div>
+                        <button type="submit" class="btn-gradient w-100">
+                            <i class="fa-solid fa-cloud-arrow-up me-2"></i>Update Chart
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mt-4">
+                    <h4 style="font-weight: 600; font-size: 1.1rem; color: var(--text-secondary);" class="mb-2">Live Data Feed</h4>
+                    <div class="table-container">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Browser</th>
+                                    <th>Share (%)</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <!-- SignalR Script -->
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    
+    <!-- Highcharts Scripts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <script>
+        let chart;
+
+        // Initialize Highcharts
+        function initChart(initialData) {
+            chart = Highcharts.chart('chartContainer', {
+                chart: {
+                    type: 'pie',
+                    backgroundColor: 'transparent',
+                    styledMode: false,
+                    options3d: {
+                        enabled: false
+                    }
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: '#f8fafc',
+                                textOutline: 'none',
+                                fontSize: '13px',
+                                fontFamily: 'Outfit, sans-serif'
+                            }
+                        },
+                        showInLegend: false
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                colors: ['#818cf8', '#c084fc', '#34d399', '#fb7185', '#fbbf24', '#38bdf8', '#a78bfa', '#f472b6'],
+                series: [{
+                    name: 'Share',
+                    colorByPoint: true,
+                    data: initialData
+                }]
+            });
+        }
+
+        // Update HTML Table
+        function updateTable(data) {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = '';
+            
+            // Sort data descending by value
+            const sortedData = [...data].sort((a, b) => b.y - a.y);
+            
+            sortedData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 500;">${item.name}</td>
+                    <td><span class="badge" style="background: rgba(129, 140, 248, 0.15); color: #818cf8; font-size: 0.9rem; font-weight: 600; padding: 0.4em 0.8em;">${item.y.toFixed(1)}%</span></td>
+                    <td class="text-end">
+                        <button class="action-btn edit" onclick="populateForm('${item.name}', ${item.y})" title="Edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="deleteData('${item.name}')" title="Delete">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Populate Form for Editing
+        window.populateForm = function(name, value) {
+            document.getElementById('browserName').value = name;
+            document.getElementById('shareValue').value = value;
+            document.getElementById('browserName').focus();
+        }
+
+        // Delete item call
+        window.deleteData = async function(name) {
+            if (!confirm(`Are you sure you want to delete ${name}?`)) return;
+
+            try {
+                const response = await fetch('/PieChart/DeleteData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(name)
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to delete data');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error deleting item: ' + err.message);
+            }
+        }
+
+        // Setup SignalR connection
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/pieChartHub")
+            .withAutomaticReconnect()
+            .build();
+
+        // When connection is established or reconnected
+        connection.onreconnecting((error) => {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            statusDot.classList.remove('connected');
+            statusText.innerText = 'Reconnecting...';
+        });
+
+        connection.onreconnected((connectionId) => {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            statusDot.classList.add('connected');
+            statusText.innerText = 'Live Feed Connected';
+        });
+
+        connection.onclose((error) => {
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            statusDot.classList.remove('connected');
+            statusText.innerText = 'Offline';
+        });
+
+        // Listen for updates from Server
+        connection.on("UpdateChartData", function (updatedData) {
+            // Update table
+            updateTable(updatedData);
+
+            // Update Highcharts Series
+            if (chart) {
+                chart.series[0].setData(updatedData);
+            }
+        });
+
+        // Start Connection and Fetch Initial Data
+        async function start() {
+            try {
+                await connection.start();
+                console.log("SignalR Connected.");
+                
+                const statusDot = document.getElementById('statusDot');
+                const statusText = document.getElementById('statusText');
+                statusDot.classList.add('connected');
+                statusText.innerText = 'Live Feed Connected';
+
+                // Fetch initial data via Controller
+                const response = await fetch('/PieChart/GetData');
+                const initialData = await response.json();
+                
+                // Init chart and table
+                initChart(initialData);
+                updateTable(initialData);
+
+            } catch (err) {
+                console.error("SignalR Connection Error: ", err);
+                const statusText = document.getElementById('statusText');
+                statusText.innerText = 'Failed to connect';
+                setTimeout(start, 5000);
+            }
+        }
+
+        // Form Submit to post new/updated value
+        document.getElementById('dataForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nameInput = document.getElementById('browserName');
+            const valueInput = document.getElementById('shareValue');
+
+            const payload = {
+                name: nameInput.value,
+                y: parseFloat(valueInput.value)
+            };
+
+            try {
+                const response = await fetch('/PieChart/UpdateData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    // Reset form
+                    nameInput.value = '';
+                    valueInput.value = '';
+                } else {
+                    const error = await response.json();
+                    alert('Error updating: ' + (error.message || 'Unknown error'));
+                }
+            } catch (err) {
+                console.error('Submit error:', err);
+                alert('Submit failed. Please check connection.');
+            }
+        });
+
+        // Start application
+        start();
+    </script>
+}
