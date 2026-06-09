@@ -1,0 +1,115 @@
+@using Newtonsoft.Json
+@model List<TeamModel>
+@{
+    List<int> _series = Model.Select(x => x.TeamValue).ToList();
+    List<string> _labels = Model.Select(x => x.TeamName).ToList();
+}
+
+<div class="mb-3">
+    <label for="teamName" class="form-label">Team Name</label>
+    <input type="text" class="form-control" id="teamName" placeholder="Team Name">
+</div>
+<div class="mb-3">
+    <label for="teamValue" class="form-label">Team Value</label>
+    <input type="text" class="form-control" id="teamValue" placeholder="Team Value">
+</div>
+<button type="button" id="btnSave" class="btn btn-outline-success">Save</button>
+
+<div id="chart-container">
+    <div id="chart"></div>
+</div>
+
+@section scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+        
+
+        // var options = {
+        //     series: _series,
+        //     chart: {
+        //         width: 380,
+        //         type: 'pie',
+        //     },
+        //     labels: _labels,
+        //     responsive: [
+        //         {
+        //             breakpoint: 480,
+        //             options: {
+        //                 chart: {
+        //                     width: 200,
+        //                 },
+        //                 legend: {
+        //                     position: 'bottom',
+        //                 },
+        //             },
+        //         },
+        //     ],
+        // }
+
+        // var chart = new ApexCharts(document.querySelector('#chart'), options)
+        // chart.render()
+
+        bindChart(@Html.Raw(JsonConvert.SerializeObject(_series)), @Html.Raw(JsonConvert.SerializeObject(_labels)))
+
+        function bindChart(_series, _labels) {
+        $('#chart-container').html('<div id="chart"></div>');
+
+        var options = {
+        series: _series,
+        chart: {
+        width: 380,
+        type: 'pie',
+        },
+        labels: _labels,
+        responsive: [
+        {
+        breakpoint: 480,
+        options: {
+        chart: {
+        width: 200,
+        },
+        legend: {
+        position: 'bottom',
+        },
+        },
+        },
+        ],
+        }
+
+        var chart = new ApexCharts(document.querySelector('#chart'), options)
+        chart.render()
+        }
+
+        $('#btnSave').click(function () {
+        const teamName = $('#teamName').val();
+        const teamValue = $('#teamValue').val();
+
+        const requestModel = {
+        TeamName: teamName,
+        TeamValue: teamValue
+        }
+        $.ajax({
+        url: '/Team/Save',
+        method: 'POST',
+        data: { requestModel: requestModel },
+        success: function (response) {
+        // console.log(response);
+        },
+        error: function (error) {
+        console.error(error);
+        }
+        });
+        });
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/notiHub").build();
+
+        connection.on("NotiReceiveMessage", function (_series, _labels) {
+        bindChart(_series, _labels);
+        });
+
+        connection.start().then(function () {
+        }).catch(function (err) {
+        return console.error(err.toString());
+        });
+    </script>
+}

@@ -37,6 +37,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.HospitalAppointmentSystem", "NLADotNetInternshipTraining.HospitalAppointmentSystem\NLADotNetInternshipTraining.HospitalAppointmentSystem.csproj", "{521FBE0A-37E2-4801-8EDD-B059724EA14C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.ApexChartRealtimeSignalr", "NLADotNetInternshipTraining.ApexChartRealtimeSignalr\NLADotNetInternshipTraining.ApexChartRealtimeSignalr.csproj", "{5EFB4310-C470-44DD-ABA4-1E1853150ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.BlazorServer.Frontend", "NLADotNetInternshipTraining.BlazorServer.Frontend\NLADotNetInternshipTraining.BlazorServer.Frontend.csproj", "{79FDD200-CB0E-470A-9626-2B2D4307CE8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.HighChartApp", "NLADotNetInternshipTraining.HighChartApp\NLADotNetInternshipTraining.HighChartApp.csproj", "{2C0422D4-F302-40B8-8F5F-F4FCC5BD86D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.MvcThemeApp", "NLADotNetInternshipTraining.MvcThemeApp\NLADotNetInternshipTraining.MvcThemeApp.csproj", "{5360E963-CC62-4296-B6F4-AFA3590D7E31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLADotNetInternshipTraining.RealtimeChatApp", "NLADotNetInternshipTraining.RealtimeChatApp\NLADotNetInternshipTraining.RealtimeChatApp.csproj", "{CFF5B30A-7FD5-428B-88A6-46A6361EED58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -114,5 +124,25 @@ Global
 		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{521FBE0A-37E2-4801-8EDD-B059724EA14C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EFB4310-C470-44DD-ABA4-1E1853150ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EFB4310-C470-44DD-ABA4-1E1853150ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EFB4310-C470-44DD-ABA4-1E1853150ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EFB4310-C470-44DD-ABA4-1E1853150ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79FDD200-CB0E-470A-9626-2B2D4307CE8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79FDD200-CB0E-470A-9626-2B2D4307CE8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79FDD200-CB0E-470A-9626-2B2D4307CE8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79FDD200-CB0E-470A-9626-2B2D4307CE8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0422D4-F302-40B8-8F5F-F4FCC5BD86D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0422D4-F302-40B8-8F5F-F4FCC5BD86D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0422D4-F302-40B8-8F5F-F4FCC5BD86D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0422D4-F302-40B8-8F5F-F4FCC5BD86D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5360E963-CC62-4296-B6F4-AFA3590D7E31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5360E963-CC62-4296-B6F4-AFA3590D7E31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5360E963-CC62-4296-B6F4-AFA3590D7E31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5360E963-CC62-4296-B6F4-AFA3590D7E31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF5B30A-7FD5-428B-88A6-46A6361EED58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF5B30A-7FD5-428B-88A6-46A6361EED58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF5B30A-7FD5-428B-88A6-46A6361EED58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF5B30A-7FD5-428B-88A6-46A6361EED58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
