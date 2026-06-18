@@ -1,0 +1,6 @@
+@NLADotNetInternshipTraining.DynamicRbacWebapi_HostAddress = http://localhost:5135
+
+GET {{NLADotNetInternshipTraining.DynamicRbacWebapi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,6 @@
+@NLADotNetInternshipTraining.JWTStaticRBACWebApi_HostAddress = http://localhost:5062
+
+GET {{NLADotNetInternshipTraining.JWTStaticRBACWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
