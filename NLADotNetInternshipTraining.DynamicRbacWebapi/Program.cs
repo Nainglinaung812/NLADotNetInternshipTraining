@@ -133,6 +133,8 @@ using (var scope = app.Services.CreateScope())
     AddRolePermissionIfNotExist(staffRole.Id, p4.Id);
 
     // Tutor Permissions
+        AddRolePermissionIfNotExist(tutorRole.Id, p3.Id);
+
     AddRolePermissionIfNotExist(tutorRole.Id, p4.Id);
 
     await context.SaveChangesAsync();
